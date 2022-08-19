@@ -7,9 +7,19 @@
     <title>adlong</title>
 </head>
 <body marginwidth="0" marginheight="0">
+<div id="ad">
+
     <!-- AdForGames.com code begin -->
 <script>var afg={};afg.u=6159;afg.s=4;
     document.write("<sc"+"ript src='//js.adforgames.com/cd.js'></sc"+"ript>");</script>
     <!-- AdForGames.com code end -->
+</div>
+
+    <script>
+        setTimeout(() => {
+            const box = document.getElementById('ad');
+            box.style.display = 'none';
+        }, 10000);
+    </script>
 </body>
 </html>
