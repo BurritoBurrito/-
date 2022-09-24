@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 
-
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: 111;
+  color: rgb(170, 170, 170);
+}
 
 html {
     scroll-behavior: smooth;
@@ -103,4 +108,12 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #4c4c4c; 
+}
+
+
+.info {
+  text-align: center;
+  padding: 3px;
+  background-color: 111;
+  color: rgb(170, 170, 170);
 }
