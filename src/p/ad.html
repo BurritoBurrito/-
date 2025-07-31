@@ -7,16 +7,14 @@
 <body>
  <style>
     body, html {
-      margin: 0; padding: 0; height: 100vh; width: 100vw; background: #222; 
+      margin: 0; padding: 0; height: 100vh; width: 100vw; 
       display: flex; justify-content: center; align-items: center;
       color: white; font-family: sans-serif;
     }
     iframe {
-      border: 3px solid lime;
-      width: 90vw;
-      height: 80vh;
+      width: 100vw;
+      height: 100vh;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
     }
     iframe.visible {
       opacity: 1;
@@ -36,7 +34,6 @@
   // Show the iframe with fade-in effect
   setTimeout(() => frame.classList.add('visible'), 100);
 
-  // Optional: Dynamically modify src to try to bypass caching/proxy issues
   setTimeout(() => {
     frame.src = "https://burritoedition.com/src/p/ad/10ad.html?bypass=" + Date.now();
   }, 5000);
