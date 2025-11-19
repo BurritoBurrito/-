@@ -2,32 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Iframe URL Rotator</title>
+  <title>adxxxxxxxxx</title>
   <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
-
   <iframe id="testFrame" 
     sandbox="allow-scripts allow-same-origin allow-forms allow-popups" 
     allow="fullscreen"
     loading="eager"
-    title="URL Rotator">
+    title="Static URL Frame">
   </iframe>
-
   <script>
     const urls = [
       "https://burritoedition.com/src/p/ad/10ad.html",
@@ -35,27 +32,11 @@
       "https://burritoedition.com/src/p/ad/8ad.html"
     ];
 
-    let currentIndex = getRandomInt(1, 3);;
+    // Randomly select one at the start
+    const currentIndex = Math.floor(Math.random() * urls.length);
+
     const iframe = document.getElementById("testFrame");
-    const switchInterval = 5000; // time in milliseconds
-
-    function loadFrame(index) {
-      iframe.src = urls[index];
-    }
-
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    // Initial load
-    loadFrame(currentIndex);
-
-    // Start loop
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % urls.length;
-      loadFrame(currentIndex);
-    }, switchInterval);
+    iframe.src = urls[currentIndex];
   </script>
-
 </body>
 </html>
