@@ -87,16 +87,18 @@ h2 {
 .topadBox {
     width: 100%;
     height: 20vh;
+    max-height: 250px;
     display: flex;
     flex-direction: row;
-    gap: 20px; /* use px to avoid issues with large % gaps */
+    gap: 20px;
     align-items: center;
     justify-content: center;
-    flex-wrap: nowrap; /* prevent wrapping */
+    flex-wrap: nowrap;
 }
 
 .topadBox div {
-    flex: 1 1 300px; /* flex-grow, flex-shrink, flex-basis */
-    max-width: 300px; /* match the ad width */
+    flex: 1 1 300px; 
+    max-width: 300px; 
+    max-height: 250px;
 }
 
