@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/baseLayout.astro';
+import GameGrid from '../componets/termsAndService.vue';
+import '../assets/global.css';
+
+---
+
+<BaseLayout title={`Terms And Service`}>
+    <GameGrid
+      client:only="vue"
+    />
+</BaseLayout>

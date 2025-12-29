@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/baseLayout.astro'
+import data from '../../../public/top500games.json';
+import GameGrid from '../../componets/tags.vue';
+import '../../assets/global.css';
+import '../../../public/burritoMan.png';
+
+interface Game {
+  gameId: string;
+  title: string;
+  tags?: string[];
+}
+
+interface Props {
+  tag: string;
+  games: Game[];
+}
+
+export function getStaticPaths() {
+  const tagSet = new Set<string>();
+
+  for (const game of data.games as Game[]) {
+    for (const tag of game.tags ?? []) {
+      tagSet.add(tag);
+    }
+  }
+
+  const tags = Array.from(tagSet);
+
+  return tags.map((tag) => ({
+    params: { id: tag },
+    props: {
+      tag,
+      games: (data.games as Game[]).filter((g) =>
+        (g.tags ?? []).includes(tag)
+      ),
+    },
+  }));
+}
+
+const { tag, games } = Astro.props as Props;
+---
+
+<BaseLayout title={`${tag} Games`}>
+    <GameGrid
+      currentTag={tag}
+      client:only="vue"
+    />
+</BaseLayout>

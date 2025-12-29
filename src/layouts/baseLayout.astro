@@ -1,0 +1,52 @@
+---
+import '../assets/global.css';
+import TopNav from '../componets/topNav.vue';
+import SiteFooter from '../componets/footer.vue';
+
+
+export interface Props {
+  title: string;
+}
+
+const { title }: Props = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title} | Burrito Edition</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap">
+  </head>
+  <body>
+    <div class="game-player">
+        <!-- nav -->
+        <TopNav client:load />
+
+        <!-- page content -->
+        <main>
+          <slot />
+        </main>
+
+        <!-- footer -->
+        <SiteFooter client:load />
+
+        <!-- Google Analytics Tags -->
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-TW1C8W4K8F');
+        </script>
+
+        <!-- Google Ad Tags -->
+        <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324" crossorigin="anonymous"></script>
+    </div>
+  </body>
+</html>

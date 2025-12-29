@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/baseLayout.astro';
+import GameGrid from '../componets/index.vue';
+import '../assets/global.css';
+
+---
+
+<BaseLayout title={`Home`}>
+    <GameGrid
+      client:only="vue"
+    />
+</BaseLayout>

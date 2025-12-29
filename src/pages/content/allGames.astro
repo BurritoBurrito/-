@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/baseLayout.astro';
+import GameGrid from '../../componets/allGames.vue';
+import data from '../../../public/top500games.json';
+import '../../assets/global.css';
+
+const games = data.games;
+---
+
+<BaseLayout title={`All Games`}>
+    <GameGrid
+        games={games}
+        client:only="vue"
+    />
+</BaseLayout>
