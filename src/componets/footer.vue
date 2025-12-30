@@ -7,15 +7,15 @@
           </div>
           <nav class="footer-links">
             <a href="../../../../index.html">Home</a>
-            <a href="../../aboutUs.html">About us</a>
-            <a href="../../contactUs.html">Contact us</a>
+            <a href="../../aboutUs">About us</a>
+            <a href="../../contactUs">Contact us</a>
           </nav>
           <div class="footer-legal">
             <p>
               By using this site, you agree to our
-              <a href="../../termsAndService.html">Terms of Service</a>
+              <a href="../../termsAndService">Terms of Service</a>
               and
-              <a href="../../privacyPolicy.html">Privacy Policy</a>.
+              <a href="../../privacyPolicy">Privacy Policy</a>.
             </p>
             <p class="footer-copy">
               © BurritoEdition.com. All rights reserved.
