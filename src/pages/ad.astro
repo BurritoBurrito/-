@@ -1,0 +1,48 @@
+---
+const title = 'Ad Page';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script
+      is:inline
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324"
+      crossorigin="anonymous"
+    ></script>
+
+    <style is:global>
+      * {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Emu -->
+    <ins
+      class="adsbygoogle"
+      style="display:inline-block;width:300px;height:250px"
+      data-ad-client="ca-pub-1658760822270324"
+      data-ad-slot="7415468314"
+    ></ins>
+
+    <script is:inline>
+      if (typeof window !== 'undefined') {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
+    </script>
+
+    <!-- Google Analytics Tags -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TW1C8W4K8F');
+    </script>
+  </body>
+</html>
