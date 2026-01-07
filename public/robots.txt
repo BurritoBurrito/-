@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://burritoedition.com/sitemap-index.xml
