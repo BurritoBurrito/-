@@ -37,6 +37,27 @@
 
 /* Global */
 
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('/fonts/material-symbols-outlined.woff2') format('woff2');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -335,9 +356,16 @@ main{
   font-family: "Baloo 2", var(--font-ui);
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--accent-soft);
   text-decoration: none;
   z-index: 10;
+}
+
+.logoPlateWord {
+  color: var(--border);
+}
+
+.logoPlateTop {
+  color: var(--accent);
 }
 
 .nav-links {

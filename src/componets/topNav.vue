@@ -3,10 +3,18 @@
       <div class="logoBox">
         <a href="/">
           <div class="contentLogoBox">
-            <img class="logoImage" src="/burritoMan.png">
+            <img 
+              class="logoImage"
+              src="/burritoMan.png"
+              alt="Burrito Edition Logo"
+              width="60"
+              height="60"
+              loading="lazy"
+              decoding="async"
+            >
             <div class="textlogobox">
-              <a href="/" class="logo">Burrito</a>
-              <a href="/" class="logo">Edition</a>
+              <a href="/" class="logo logoPlateTop">Burrito</a>
+              <a href="/" class="logo logoPlateWord">Edition</a>
             </div>
           </div>
           <div class="plate"></div>

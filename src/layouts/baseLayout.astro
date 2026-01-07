@@ -3,7 +3,6 @@ import '../assets/global.css';
 import TopNav from '../componets/topNav.vue';
 import SiteFooter from '../componets/footer.vue';
 
-
 export interface Props {
   title: string;
 }
@@ -20,8 +19,6 @@ const { title }: Props = Astro.props;
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap">
   </head>
   <body>
     <div class="game-player">
@@ -37,8 +34,8 @@ const { title }: Props = Astro.props;
         <SiteFooter client:load />
 
         <!-- Google Analytics Tags -->
-        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
-        <script is:inline>
+        <script is:inline defer src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
+        <script is:inline defer>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -46,7 +43,7 @@ const { title }: Props = Astro.props;
         </script>
 
         <!-- Google Ad Tags -->
-        <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324" crossorigin="anonymous"></script>
+        <script is:inline defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324" crossorigin="anonymous"></script>
     </div>
   </body>
 </html>

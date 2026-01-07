@@ -7,8 +7,22 @@ import sitemap from '@astrojs/sitemap';
 
 import Compress from 'astro-compress';
 
+import compress from 'vite-plugin-compression';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://burritoedition.com',
-  integrations: [vue(), sitemap(), Compress()]
+  integrations: [
+    vue(), 
+    sitemap(), 
+    Compress()
+  ],
+  vite: {
+    plugins: [
+      compress({
+        algorithm: 'brotliCompress',
+        threshold: 10240,
+      }),
+    ],
+  },
 });
