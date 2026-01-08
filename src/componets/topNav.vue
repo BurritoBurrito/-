@@ -8,7 +8,7 @@
               src="/burritoMan.png"
               alt="Burrito Edition Logo"
               width="60"
-              height="60"
+              height="90"
               decoding="async"
             >
             <div class="textlogobox">

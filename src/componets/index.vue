@@ -177,9 +177,11 @@ async function initHomeSections() {
     if (gamesList.length) return;
     const container = document.querySelector(selector);
     if (!container) return;
-    const wrapper = container.closest('.gameViewWraper');
-    if (wrapper) wrapper.style.display = 'none';
+    // Instead of display:none on the wrapper, just show a small message
+    container.classList.add('section-grid');
+    container.innerHTML = '<p>No games yet.</p>';
   }
+
 
   const newGames = games.slice(-6);
   const popularGames = games;
@@ -212,5 +214,11 @@ onMounted(() => {
   initHomeSections().catch((err) => {
     console.error('Failed to init home sections', err);
   });
+  
+  setTimeout(() => {
+    document.querySelector('.mainView')?.style.removeProperty('will-change');
+    document.querySelector('.site-footer')?.style.removeProperty('will-change');
+    document.querySelector('.hero')?.style.removeProperty('will-change');
+  }, 5000);
 });
 </script>

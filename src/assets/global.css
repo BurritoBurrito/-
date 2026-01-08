@@ -76,6 +76,17 @@ main{
   min-height: 70vh;
 }
 
+.continuePlaying,
+.bookmarketedGames,
+.newGames,
+.popularGames,
+.actionTagedGames,
+.puzzleTagedGames,
+.randomTagedGames {
+  min-height: 260px;      /* tweak as needed to roughly fit 1 row */
+}
+
+
 .game-player {
   min-height: 100vh;
   display: flex;
@@ -278,6 +289,7 @@ main{
   z-index: 1000;
   padding: 0 2rem;
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 2rem;
@@ -292,6 +304,7 @@ main{
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  flex-shrink: 0;
 }
 
 .contentLogoBox {
@@ -342,7 +355,7 @@ main{
 
 .logoImage {
   width: 50px;
-  height: auto;
+  height: 90px;
   z-index: 10;
 }
 
@@ -400,6 +413,8 @@ main{
   padding: 1.75rem 1.5rem 2.25rem;
   color: var(--color-text-muted);
   font-size: 0.85rem;
+  min-height: 140px;
+  box-sizing: border-box;
 }
 
 .footer-inner {
@@ -581,6 +596,7 @@ main{
 /* CARDS */
 
 .section-grid {
+  min-height: 260px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -589,6 +605,11 @@ main{
   gap: 1rem 1.5rem;
   margin-top: 1rem;
   width: 100%;
+}
+
+.section-grid .game-card,
+.section-grid .game-card-fixed {
+  min-height: 140px;      /* approx height of one card row */
 }
 
 .section-grid .game-card {
@@ -664,9 +685,12 @@ main{
 
 .gameViewWraper{
   max-width: 950px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 300px; /* estimated height */
 }
 
 .gameViewWarperVertical {
+  min-height: 1200px;
   width: 40%;
   display: flex;
   flex-direction: column;
@@ -713,6 +737,7 @@ main{
 
 .sideBysideView {
   max-width: 1100px;
+  height: 1200px;
   display: flex;
   flex-direction: row;
   justify-content: center;

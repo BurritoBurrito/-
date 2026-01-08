@@ -19,11 +19,41 @@ const { title }: Props = Astro.props;
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href="/top500games.json" as="fetch" crossorigin>
+    <style>
+      .continuePlaying,
+      .bookmarketedGames,
+      .newGames,
+      .popularGames,
+      .actionTagedGames,
+      .puzzleTagedGames,
+      .randomTagedGames {
+        min-height: 260px;
+        contain: layout; 
+      }
+      .section-grid {
+        min-height: 260px;
+      }
+      .site-footer {
+        min-height: 140px;
+        contain: layout;
+      }
+      .logoBox {
+        width: 260px;
+        height: 160px;
+        contain: layout;
+      }
+     .hero,
+     .mainView,
+     .site-footer {
+       will-change: contents;
+     }
+    </style>
   </head>
   <body>
     <div class="game-player">
         <!-- nav -->
-        <TopNav client:load />
+        <TopNav />
 
         <!-- page content -->
         <main>
@@ -31,7 +61,7 @@ const { title }: Props = Astro.props;
         </main>
 
         <!-- footer -->
-        <SiteFooter client:load />
+        <SiteFooter />
 
         <!-- Google Analytics Tags -->
         <script is:inline defer src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
