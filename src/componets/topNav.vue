@@ -9,7 +9,6 @@
               alt="Burrito Edition Logo"
               width="60"
               height="60"
-              loading="lazy"
               decoding="async"
             >
             <div class="textlogobox">
