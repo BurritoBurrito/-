@@ -13,8 +13,8 @@ import compress from 'vite-plugin-compression';
 export default defineConfig({
   site: 'https://burritoedition.com',
   integrations: [
-    vue(), 
-    sitemap(), 
+    vue(),
+    sitemap(),
     Compress()
   ],
   vite: {

@@ -8,6 +8,7 @@ const title = 'Ad Page';
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- AdSense -->
     <script
       is:inline
       async
@@ -18,17 +19,85 @@ const title = 'Ad Page';
     <style is:global>
       * {
         margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #050608;          /* --bg */
+        color: #f7f3ea;               /* --color-text-main */
+      }
+
+      .wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+
+      .card {
+        max-width: 420px;
+        width: 100%;
+        background: #090a10;          /* --bg-discription */
+        border-radius: 12px;
+        padding: 20px 18px 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55); /* --box-shadow */
+        border: 1px solid #3b2a1a;    /* --border */
+        text-align: center;
+      }
+
+      .title {
+        font-size: 1.25rem;
+        margin-bottom: 6px;
+        color: #f6b756;               /* --accent */
+      }
+
+      .text {
+        font-size: 0.9rem;
+        color: #b3a9a0;               /* --color-text-muted */
+        margin-bottom: 10px;
+      }
+
+      .small {
+        font-size: 0.75rem;
+        color: #b3a9a0;
+        margin-top: 8px;
+      }
+
+      .ad-wrap {
+        margin-top: 8px;
       }
     </style>
   </head>
   <body>
-    <!-- Emu -->
-    <ins
-      class="adsbygoogle"
-      style="display:inline-block;width:300px;height:250px"
-      data-ad-client="ca-pub-1658760822270324"
-      data-ad-slot="7415468314"
-    ></ins>
+    <div class="wrap">
+      <div class="card">
+        <div class="title">Preparing your game…</div>
+        <p class="text">
+          Your game is loading in the background. This support page helps keep
+          Burrito Edition online for everyone.
+        </p>
+
+        <!-- Enu ad unit -->
+        <div class="ad-wrap">
+          <ins
+            class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-1658760822270324"
+            data-ad-slot="6700820812"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
+
+        <p class="small">
+          You can close this window once your game has started. Thanks for
+          supporting Burrito Edition!
+        </p>
+      </div>
+    </div>
 
     <script is:inline>
       if (typeof window !== 'undefined') {
@@ -37,10 +106,14 @@ const title = 'Ad Page';
     </script>
 
     <!-- Google Analytics Tags -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"></script>
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TW1C8W4K8F"
+    ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-TW1C8W4K8F');
     </script>
