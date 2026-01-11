@@ -17,11 +17,5 @@ const { game } = Astro.props;
 
 <BaseLayout title={game.title}>
   <GameGrid currentGame={game} client:only="vue" />
-  <script>
-      const script = document.createElement('script');
-      script.src = 'https://burritoedition.github.io/emu/ruffle/ruffle.js';
-      script.defer = true;
-      document.head.appendChild(script);
-  </script>
-  <script src="https://burritoedition.github.io/emu/jszip.min.js"></script>
+  <script is:inline src="/js/jszip.min.js"></script>
 </BaseLayout>

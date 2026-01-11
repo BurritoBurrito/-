@@ -150,7 +150,7 @@ const formattedDescription = computed(() => {
 async function loadRuffle() {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = 'https://burritoedition.github.io/emu/ruffle/ruffle.js';
+    script.src = '/js/ruffle/ruffle.js';
     script.async = true;
     script.onload = () => {
       window.RufflePlayer = window.RufflePlayer || {};
@@ -169,7 +169,7 @@ async function initFlashPlayer() {
   }
 
   window.RufflePlayer.config = {
-    publicPath: 'https://burritoedition.github.io/emu/ruffle/',
+    publicPath: '/js/ruffle/',
     polyfills: true,
     autoplay: 'on',
     unmuteOverlay: 'hidden',
