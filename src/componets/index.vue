@@ -15,7 +15,7 @@
         <div class="gameViewWraper">
             <div class="viewHeader">
                 <p class="gameGroupTag">Bookmarket Games</p>
-                <a href="/content/bookmarked" class="viewAllGamesTag">View all →</a>
+                <a href="/content/bookmarked" class="viewAllGamesTag">View all Bookmarked→</a>
             </div>
             <div class="bookmarketedGames"></div>
         </div>
@@ -23,14 +23,14 @@
             <div class="gameViewWarperVertical">
                 <div class="viewHeader">
                     <p class="gameGroupTag">New Games</p>
-                    <a href="/content/allGames" class="viewAllGamesTag">View all →</a>
+                    <a href="/content/allGames" class="viewAllGamesTag">View all New→</a>
                 </div>
                 <div class="newGames"></div>
             </div>
             <div class="gameViewWarperVertical">
                 <div class="viewHeader">
                     <p class="gameGroupTag">Popular Games</p>
-                    <a href="/content/allGames" class="viewAllGamesTag">View all →</a>
+                    <a href="/content/allGames" class="viewAllGamesTag">View all Popular→</a>
                 </div>
                 <div class="popularGames"></div>
             </div>
@@ -38,21 +38,21 @@
         <div class="gameViewWraper">
             <div class="viewHeader">
                 <p class="gameGroupTag">Action Games</p>
-                <a href="/tag/Action" class="viewAllGamesTag">View all →</a>
+                <a href="/tag/Action" class="viewAllGamesTag">View all Action→</a>
             </div>
             <div class="actionTagedGames"></div>
         </div>
         <div class="gameViewWraper">
             <div class="viewHeader">
                 <p class="gameGroupTag">Puzzle Games</p>
-                <a href="/tag/Puzzle" class="viewAllGamesTag">View all →</a>
+                <a href="/tag/Puzzle" class="viewAllGamesTag">View all Puzzle→</a>
             </div>
             <div class="puzzleTagedGames"></div>
         </div>
         <div class="gameViewWraper">
             <div class="viewHeader">
                 <p class="gameGroupTag">Curated Games For You</p>
-                <a href="/content/allGames" class="viewAllGamesTag">View all →</a>
+                <a href="/content/allGames" class="viewAllGamesTag">View all Curated→</a>
             </div>
             <div class="randomTagedGames"></div>
         </div>
@@ -61,6 +61,23 @@
 
 <script setup>
 import { onMounted } from 'vue';
+
+const props = defineProps({
+  gameLogos: { type: Object, required: false }
+});
+
+function searchGameLogos(id) {
+  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
+    key.endsWith(id)
+  );
+  return matchingKey || "/fallback-logo.png";
+}
+
+const getLogoSync = (logoFile) => {
+  if (!logoFile) return '/fallback-logo.png';
+  return searchGameLogos(logoFile) || '/fallback-logo.png';
+};
+
 
 const BOOKMARK_KEY = 'be_bookmarks';
 const CONTINUE_KEY = 'be_continue';
@@ -108,7 +125,7 @@ async function initHomeSections() {
         <div class="game-card">
           <a href="/content/${encodeURIComponent(g.gameId)}">
             <div class="thumb">
-              <img src="${g.logoUrl || ''}" alt="${g.title}">
+              <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
             </div>
           </a>
           <a href="/content/${encodeURIComponent(g.gameId)}">
@@ -136,7 +153,7 @@ async function initHomeSections() {
         <div class="game-card-fixed">
           <a href="/content/${encodeURIComponent(g.gameId)}">
             <div class="thumb">
-              <img src="${g.logoUrl || ''}" alt="${g.title}">
+              <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
             </div>
           </a>
           <a href="/content/${encodeURIComponent(g.gameId)}">

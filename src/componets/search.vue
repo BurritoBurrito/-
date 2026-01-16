@@ -2,6 +2,22 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
+const props = defineProps({
+  gameLogos: { type: Object, required: false }
+});
+
+function searchGameLogos(id) {
+  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
+    key.endsWith(id)
+  );
+  return matchingKey || "/fallback-logo.png";
+}
+
+const getLogoSync = (logoFile) => {
+  if (!logoFile) return '/fallback-logo.png';
+  return searchGameLogos(logoFile) || '/fallback-logo.png';
+};
+
 const searchQuery = ref('');
 const allGames = ref([]);
 
@@ -21,10 +37,10 @@ onMounted(async () => {
 });
 
 function sampleRandom(arr, n) {
-  const copy = arr.slice();                // don't mutate original
+  const copy = arr.slice();               
   for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]]; // Fisher–Yates shuffle
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy.slice(0, n);
 }
@@ -32,12 +48,10 @@ function sampleRandom(arr, n) {
 const filteredGames = computed(() => {
   const q = searchQuery.value.trim().toLowerCase();
 
-  // no query: 12 random games
   if (!q) {
     return sampleRandom(allGames.value, 12);
   }
 
-  // with query: all matches
   return allGames.value.filter((g) => {
     const title = (g.title || '').toLowerCase();
     const desc = (g.originalDescription || '').toLowerCase();
@@ -77,7 +91,7 @@ const filteredGames = computed(() => {
       >
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
           <div class="thumb">
-            <img :src="g.logoUrl || ''" :alt="g.title" />
+            <img :src="getLogoSync(g.logoUrl)" :alt="g.title" />
           </div>
         </a>
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
@@ -90,7 +104,7 @@ const filteredGames = computed(() => {
     </div>
     <div class="no-results" v-else>
         <p>No games found. Try another title, tag, or developer.</p>
-        <img src="/burritoCrying.png">
+        <img src="/src/assets/imgs/favicon/burritoCrying.png">
     </div>
 
   </section>

@@ -13,7 +13,20 @@ import { onMounted } from 'vue';
 
 const props = defineProps({
   currentTag: { type: String, required: true },
+  gameLogos: { type: Object, required: false }
 });
+
+function searchGameLogos(id) {
+  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
+    key.endsWith(id)
+  );
+  return matchingKey || "/fallback-logo.png";
+}
+
+const getLogoSync = (logoFile) => {
+  if (!logoFile) return '/fallback-logo.png';
+  return searchGameLogos(logoFile) || '/fallback-logo.png';
+};
 
 async function initHomeSections() {
   const res = await fetch('/top500games.json');
@@ -45,7 +58,7 @@ async function initHomeSections() {
         <div class="game-card">
           <a href="/content/${encodeURIComponent(g.gameId)}">
             <div class="thumb">
-              <img src="${g.logoUrl || ''}" alt="${g.title}">
+              <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
             </div>
           </a>
           <a href="/content/${encodeURIComponent(g.gameId)}">

@@ -4,9 +4,18 @@ import GameGrid from '../../componets/search.vue';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
+const gameLogos = import.meta.glob(
+  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
+  { eager: false }
+);
+
+
 const games = data.games;
 ---
 
-<BaseLayout title={`Search`}>
-    <GameGrid client:only="vue"/>
+<BaseLayout gameLogos={gameLogos} title={`Search`} description='Search thousands of Flash games and browser titles on Burrito Edition. Find specific games fast with our powerful search engine. Start your game discovery now!'>
+    <GameGrid 
+        gameLogos={gameLogos}
+        client:only="vue"
+    />
 </BaseLayout>

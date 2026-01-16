@@ -4,9 +4,17 @@ import GameGrid from '../../componets/bookmarked.vue';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
+const gameLogos = import.meta.glob(
+  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
+  { eager: false }
+);
+
 const games = data.games;
 ---
 
-<BaseLayout title={`Bookmarks`}>
-    <GameGrid client:only="vue"/>
+<BaseLayout gameLogos={gameLogos} title={`Bookmarks`} description='Access your saved Flash games quickly on Burrito Edition. View, organize and play your bookmarked favorites anytime from one convenient collection. Jump back into your favorites!'>
+    <GameGrid 
+        gameLogos={gameLogos}
+        client:only="vue"
+    />
 </BaseLayout>

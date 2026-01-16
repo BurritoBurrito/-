@@ -4,12 +4,18 @@ import GameGrid from '../../componets/allGames.vue';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
+const gameLogos = import.meta.glob(
+  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
+  { eager: false }
+);
+
 const games = data.games;
 ---
 
-<BaseLayout title={`All Games`}>
+<BaseLayout gameLogos={gameLogos} title={`All Games`} description='Play thousands of free Flash games, retro classics & browser games instantly on Burrito Edition - no downloads needed. Nostalgic arcade fun, daily updates, and endless entertainment for gamers everywhere. Play now!'>
     <GameGrid
         games={games}
+        gameLogos={gameLogos}
         client:only="vue"
     />
 </BaseLayout>

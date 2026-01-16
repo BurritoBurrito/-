@@ -67,7 +67,27 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 // props
 const props = defineProps({
   currentGame: { type: Object, required: true },
+  gameLogos: { type: Object, required: false }
 });
+
+const getLogo = async (logoFile) => {
+  try {
+    const logos = props.gameLogos;
+    if (!logos || !logoFile) return '/fallback-logo.png';
+
+    const pathKey = Object.keys(logos).find((key) => {
+      const tail = key.slice(-41);
+      return tail === logoFile;
+    });
+
+    if (!pathKey) return '/fallback-logo.png';
+
+    return pathKey
+  } catch (e) {
+    console.warn('Logo load failed:', logoFile, e);
+    return '/fallback-logo.png';
+  }
+};
 
 const goToTag = (tag) => {
   window.location.href = `/tag/${encodeURIComponent(tag)}`;
@@ -150,7 +170,7 @@ const formattedDescription = computed(() => {
 async function loadRuffle() {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = '/js/ruffle/ruffle.js';
+    script.src = '../../../src/assets/js/ruffle/ruffle.js';
     script.async = true;
     script.onload = () => {
       window.RufflePlayer = window.RufflePlayer || {};
@@ -169,7 +189,7 @@ async function initFlashPlayer() {
   }
 
   window.RufflePlayer.config = {
-    publicPath: '/js/ruffle/',
+    publicPath: '../../../src/assets/js/ruffle/',
     polyfills: true,
     autoplay: 'on',
     unmuteOverlay: 'hidden',
@@ -312,16 +332,17 @@ function renderAlsoPlay(containerSelector, gamesList) {
   if (!container || !gamesList.length) return;
 
   container.classList.add('also-play-carousel');
+  
   container.innerHTML = gamesList
     .map(
       (g) => `
       <a class="also-play-item" href="/content/${encodeURIComponent(g.gameId)}">
         <div class="also-play-thumb">
-          <img src="${g.logoUrl || ''}" alt="${g.title}">
+          <img src="${g.logoUrlResolved || '/fallback-logo.png'}" alt="${g.title}">
         </div>
         <div class="also-play-title">${g.title}</div>
       </a>
-    `,
+    `
     )
     .join('');
 
@@ -341,18 +362,36 @@ function renderAlsoPlay(containerSelector, gamesList) {
   });
 }
 
-async function initAlsoPlay() {
-  const res = await fetch('/top500games.json');
-  if (!res.ok) {
-    console.error('Failed to load top500games.json');
-    return;
-  }
-  const data = await res.json();
-  const games = data.games ?? data;
 
-  const relatedGames = getRelatedGames(games, currentId, 12);
-  renderAlsoPlay('.alsoPlay', relatedGames);
+async function initAlsoPlay() {
+  try {
+    const res = await fetch('/top500games.json');
+    if (!res.ok) {
+      console.error('Failed to load top500games.json');
+      return;
+    }
+    const data = await res.json();
+    const games = data.games ?? data;
+
+    const relatedGames = getRelatedGames(games, currentId, 12);
+
+    const gamesWithLogos = await Promise.all(
+      relatedGames.map(async (g) => {
+        const resolved = await getLogo(g.logoUrl);
+        return {
+          ...g,
+          logoUrlResolved: resolved,
+        };
+      })
+    );
+
+    renderAlsoPlay('.alsoPlay', gamesWithLogos);
+  } catch (e) {
+    console.error('initAlsoPlay failed', e);
+  }
 }
+
+
 
 /* ----------------- LIFECYCLE ----------------- */
 

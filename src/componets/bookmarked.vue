@@ -13,7 +13,7 @@
       >
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
           <div class="thumb">
-            <img :src="g.logoUrl || ''" :alt="g.title" />
+            <img :src="getLogoSync(g.logoUrl)" :alt="g.title" />
           </div>
         </a>
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
@@ -34,6 +34,22 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+
+const props = defineProps({
+  gameLogos: { type: Object, required: false }
+});
+
+function searchGameLogos(id) {
+  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
+    key.endsWith(id)
+  );
+  return matchingKey || "/fallback-logo.png";
+}
+
+const getLogoSync = (logoFile) => {
+  if (!logoFile) return '/fallback-logo.png';
+  return searchGameLogos(logoFile) || '/fallback-logo.png';
+};
 
 const BOOKMARK_KEY = 'be_bookmarks';
 
@@ -103,7 +119,4 @@ onMounted(async () => {
   text-align: center;
   color: var(--color-text-muted);
 }
-
-/* cards/grid use your existing global styles:
-   .section-grid, .game-card, .thumb, .titleCard, .card-discription */
 </style>

@@ -4,12 +4,18 @@ import GameGrid from '../../componets/tagsIndexView.vue';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
+const gameLogos = import.meta.glob(
+  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
+  { eager: false }
+);
+
 const games = data.games;
 ---
 
-<BaseLayout title={`Tags`}>
+<BaseLayout gameLogos={gameLogos} title={`Tags`} description='Browse Flash game tags on Burrito Edition. Explore thousands of browser games organized by category and tag. Find your favorite gaming styles instantly!'>
     <GameGrid
         games={games}
+        gameLogos={gameLogos}
         client:only="vue"
     />
 </BaseLayout>

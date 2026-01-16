@@ -1,7 +1,22 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+
 const props = defineProps({
-  games: { type: Array, required: true }
+  games: { type: Array, required: true },
+  gameLogos: { type: Object, required: false }
 });
+
+function searchGameLogos(id) {
+  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
+    key.endsWith(id)
+  );
+  return matchingKey || "/fallback-logo.png";
+}
+
+const getLogoSync = (logoFile) => {
+  if (!logoFile) return '/fallback-logo.png';
+  return searchGameLogos(logoFile) || '/fallback-logo.png';
+};
 
 function truncateAtSpace(text, maxLen = 140) {
   if (!text) return '';
@@ -26,7 +41,7 @@ function truncateAtSpace(text, maxLen = 140) {
       >
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
           <div class="thumb">
-            <img :src="g.logoUrl || ''" :alt="g.title" />
+            <img :src="getLogoSync(g.logoUrl)" :alt="g.title" />
           </div>
         </a>
         <a :href="`/content/${encodeURIComponent(g.gameId)}`">
