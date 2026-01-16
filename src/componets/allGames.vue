@@ -3,20 +3,11 @@ import { ref, onMounted } from 'vue';
 
 const props = defineProps({
   games: { type: Array, required: true },
-  gameLogos: { type: Object, required: false }
 });
 
-function searchGameLogos(id) {
-  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
-    key.endsWith(id)
-  );
-  return matchingKey || "/fallback-logo.png";
+function getLogoSync(logoUrl){
+  return "/imgs/gameLogo/" + logoUrl
 }
-
-const getLogoSync = (logoFile) => {
-  if (!logoFile) return '/fallback-logo.png';
-  return searchGameLogos(logoFile) || '/fallback-logo.png';
-};
 
 function truncateAtSpace(text, maxLen = 140) {
   if (!text) return '';

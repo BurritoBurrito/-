@@ -3,12 +3,6 @@ import BaseLayout from '../../layouts/baseLayout.astro'
 import data from '../../../public/top500games.json';
 import GameGrid from '../../componets/tags.vue';
 import '../../assets/global.css';
-import '../../assets/imgs/favicon/burritoMan.png';
-
-const gameLogos = import.meta.glob(
-  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
-  { eager: false }
-);
 
 interface Game {
   gameId: string;
@@ -46,9 +40,8 @@ export function getStaticPaths() {
 const { tag, games } = Astro.props as Props;
 ---
 
-<BaseLayout gameLogos={gameLogos} title={`${tag} Games`} description={`Play ${tag} Flash games on Burrito Edition. Discover top browser games in the ${tag} category with instant play - no downloads needed. Explore ${tag} gaming now!`}>
+<BaseLayout title={`${tag} Games`} description={`Play ${tag} Flash games on Burrito Edition. Discover top browser games in the ${tag} category with instant play - no downloads needed. Explore ${tag} gaming now!`}>
     <GameGrid
-      gameLogos={gameLogos}
       currentTag={tag}
       client:only="vue"
     />

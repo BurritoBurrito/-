@@ -4,11 +4,6 @@ import data from '../../../public/top500games.json';
 import GameGrid from '../../componets/GameGrid.vue';
 import '../../assets/global.css';
 
-const gameLogos = import.meta.glob(
-  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
-  { eager: false }
-);
-
 export function getStaticPaths() {
   return data.games.map((game) => ({
     params: { id: game.gameId },
@@ -20,10 +15,9 @@ export function getStaticPaths() {
 const { game } = Astro.props;
 ---
 
-<BaseLayout title={game.title} description={game.originalDescription} gameLogos={gameLogos}>
+<BaseLayout title={game.title} description={game.originalDescription} >
     <GameGrid
     currentGame={game}
-    gameLogos={gameLogos}
     client:only="vue"
   />
   <script is:inline src="../../src/assets/js/jszip.min.js"></script>

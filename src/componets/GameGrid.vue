@@ -67,27 +67,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 // props
 const props = defineProps({
   currentGame: { type: Object, required: true },
-  gameLogos: { type: Object, required: false }
 });
-
-const getLogo = async (logoFile) => {
-  try {
-    const logos = props.gameLogos;
-    if (!logos || !logoFile) return '/fallback-logo.png';
-
-    const pathKey = Object.keys(logos).find((key) => {
-      const tail = key.slice(-41);
-      return tail === logoFile;
-    });
-
-    if (!pathKey) return '/fallback-logo.png';
-
-    return pathKey
-  } catch (e) {
-    console.warn('Logo load failed:', logoFile, e);
-    return '/fallback-logo.png';
-  }
-};
 
 const goToTag = (tag) => {
   window.location.href = `/tag/${encodeURIComponent(tag)}`;
@@ -362,6 +342,9 @@ function renderAlsoPlay(containerSelector, gamesList) {
   });
 }
 
+const getLogo = (logoFile) => {
+  return "/imgs/gameLogo/" + logoFile
+};
 
 async function initAlsoPlay() {
   try {

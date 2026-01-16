@@ -8,24 +8,15 @@
 </template>
 
 <script setup>
-import { string } from 'astro:schema';
 import { onMounted } from 'vue';
 
 const props = defineProps({
   currentTag: { type: String, required: true },
-  gameLogos: { type: Object, required: false }
 });
-
-function searchGameLogos(id) {
-  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
-    key.endsWith(id)
-  );
-  return matchingKey || "/fallback-logo.png";
-}
 
 const getLogoSync = (logoFile) => {
   if (!logoFile) return '/fallback-logo.png';
-  return searchGameLogos(logoFile) || '/fallback-logo.png';
+  return "/imgs/gameLogo/" + logoFile
 };
 
 async function initHomeSections() {

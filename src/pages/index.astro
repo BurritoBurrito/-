@@ -3,16 +3,10 @@ import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/index.vue';
 import '../assets/global.css';
 
-const gameLogos = import.meta.glob(
-  '/src/assets/imgs/gameLogo/*.{png,jpg,jpeg,webp}',
-  { eager: false }
-);
-
 ---
 
-<BaseLayout gameLogos={gameLogos} title={`Home`} description='Play thousands of free Flash games and browser games instantly on Burrito Edition - no downloads needed. Daily updates and endless entertainment for gamers everywhere. Play now!'>
+<BaseLayout title={`Home`} description='Play thousands of free Flash games and browser games instantly on Burrito Edition - no downloads needed. Daily updates and endless entertainment for gamers everywhere. Play now!'>
     <GameGrid
-      gameLogos={gameLogos}
       client:only="vue"
     />
 </BaseLayout>

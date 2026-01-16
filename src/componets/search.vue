@@ -2,20 +2,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-const props = defineProps({
-  gameLogos: { type: Object, required: false }
-});
-
-function searchGameLogos(id) {
-  const matchingKey = Object.keys(props.gameLogos || {}).find(key => 
-    key.endsWith(id)
-  );
-  return matchingKey || "/fallback-logo.png";
-}
-
 const getLogoSync = (logoFile) => {
-  if (!logoFile) return '/fallback-logo.png';
-  return searchGameLogos(logoFile) || '/fallback-logo.png';
+  return "/imgs/gameLogo/" + logoFile
 };
 
 const searchQuery = ref('');
@@ -104,7 +92,7 @@ const filteredGames = computed(() => {
     </div>
     <div class="no-results" v-else>
         <p>No games found. Try another title, tag, or developer.</p>
-        <img src="/src/assets/imgs/favicon/burritoCrying.png">
+        <img src="/imgs/favicon/burritoCrying.png">
     </div>
 
   </section>

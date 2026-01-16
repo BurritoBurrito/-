@@ -1,14 +1,3 @@
-<script setup>
-import { string } from 'astro/zod';
-
-const { logoSrc } = defineProps({
-  logoSrc: {
-    type: String,
-  }
-});
-</script>
-
-
 <template>
   <nav class="top-nav">
     <div class="logoBox">
@@ -16,8 +5,7 @@ const { logoSrc } = defineProps({
         <div class="contentLogoBox">
           <img
             class="logoImage"
-            v-if="logoSrc"
-            :src="logoSrc"
+            src="/imgs/favicon/burritoMan.png"
             alt="Burrito Edition logo"
             width="60"
             height="90"
