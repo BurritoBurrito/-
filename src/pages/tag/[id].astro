@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro'
+import JsonLd from '../../layouts/JsonLd.astro';
 import data from '../../../public/top500games.json';
 import GameGrid from '../../componets/tags.vue';
 import '../../assets/global.css';
@@ -38,11 +39,40 @@ export function getStaticPaths() {
 }
 
 const { tag, games } = Astro.props as Props;
+
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/tag/${tag}`;
+
+const description = `Play ${tag} Flash games on Burrito Edition. Discover top browser games in the ${tag} category with instant play - no downloads needed. Explore ${tag} gaming now!`;
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebPage', 'CollectionPage'],
+  name: `${tag} Games`,
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Tags', item: `${siteUrl}/tags` },
+    { '@type': 'ListItem', position: 3, name: `${tag} Games`, item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`${tag} Games`} description={`Play ${tag} Flash games on Burrito Edition. Discover top browser games in the ${tag} category with instant play - no downloads needed. Explore ${tag} gaming now!`}>
-    <GameGrid
-      currentTag={tag}
-      client:only="vue"
-    />
+<BaseLayout title={`${tag} Games`} description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid
+    currentTag={tag}
+    client:only="vue"
+  />
 </BaseLayout>

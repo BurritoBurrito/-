@@ -1,13 +1,39 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
+import JsonLd from '../../layouts/JsonLd.astro';
 import GameGrid from '../../componets/allGames.vue';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
 const games = data.games;
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/content/allGames/`;
+const description = 'Play thousands of free Flash games, retro classics & browser games instantly on Burrito Edition - no downloads needed. Nostalgic arcade fun, daily updates, and endless entertainment for gamers everywhere. Play now!'
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebPage', 'CollectionPage'],
+  name: 'All Games',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'All Games', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`All Games`} description='Play thousands of free Flash games, retro classics & browser games instantly on Burrito Edition - no downloads needed. Nostalgic arcade fun, daily updates, and endless entertainment for gamers everywhere. Play now!'>
+<BaseLayout title={`All Games`} description={description}>
+    <head slot="head">
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={breadcrumbSchema} />
+    </head>
     <GameGrid
         games={games}    
         client:only="vue"

@@ -1,15 +1,45 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
 import GameGrid from '../../componets/tagsIndexView.vue';
+import JsonLd from '../../layouts/JsonLd.astro';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
 const games = data.games;
+
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/tag/`;
+
+const description =
+  'Browse Flash game tags on Burrito Edition. Explore thousands of browser games organized by category and tag. Find your favorite gaming styles instantly!';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebPage', 'CollectionPage'],
+  name: 'Tags',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Tags', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`Tags`} description='Browse Flash game tags on Burrito Edition. Explore thousands of browser games organized by category and tag. Find your favorite gaming styles instantly!'>
-    <GameGrid
-        games={games}
-        client:only="vue"
-    />
+<BaseLayout title="Tags" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid
+    games={games}
+    client:only="vue"
+  />
 </BaseLayout>

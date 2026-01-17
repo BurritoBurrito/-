@@ -1,12 +1,40 @@
 ---
 import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/aboutUs.vue';
+import JsonLd from '../layouts/JsonLd.astro';
 import '../assets/global.css';
 
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/aboutUs/`;
+
+const description = 'Learn about Burrito Edition - your home for thousands of free Flash games and browser gaming. Discover our mission to preserve and share classic web gaming experiences.';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebPage', 'AboutPage'],
+  name: 'About Us',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'About Us', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`About Us`} description='Learn about Burrito Edition - your home for thousands of free Flash games and browser gaming. Discover our mission to preserve and share classic web gaming experiences.'>
-    <GameGrid
-      client:only="vue"
-    />
+<BaseLayout title="About Us" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid
+    client:only="vue"
+  />
 </BaseLayout>

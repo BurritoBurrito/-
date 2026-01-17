@@ -1,12 +1,29 @@
 ---
 import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/index.vue';
+import JsonLd from '../layouts/JsonLd.astro';
 import '../assets/global.css';
 
+const siteUrl = 'https://burritoedition.com';
+
+const description = 'Play thousands of free Flash games and browser games instantly on Burrito Edition - no downloads needed. Daily updates and endless entertainment for gamers everywhere. Play now!';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Home',
+  url: siteUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
 ---
 
-<BaseLayout title={`Home`} description='Play thousands of free Flash games and browser games instantly on Burrito Edition - no downloads needed. Daily updates and endless entertainment for gamers everywhere. Play now!'>
-    <GameGrid
-      client:only="vue"
-    />
+<BaseLayout title="Home" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+  </head>
+
+  <GameGrid
+    client:only="vue"
+  />
 </BaseLayout>

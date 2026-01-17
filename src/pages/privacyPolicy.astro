@@ -1,12 +1,40 @@
 ---
 import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/privacyPolicy.vue';
+import JsonLd from '../layouts/JsonLd.astro';
 import '../assets/global.css';
 
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/privacyPolicy/`;
+
+const description = 'Read Burrito Edition Privacy Policy for Flash games and browser gaming. Learn how we protect your data, bookmarks, and gaming activity across our platform.';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Privacy Policy',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`Privacy Policy`} description='Read Burrito Edition Privacy Policy for Flash games and browser gaming. Learn how we protect your data, bookmarks, and gaming activity across our platform.'>
-    <GameGrid
-      client:only="vue"
-    />
+<BaseLayout title="Privacy Policy" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid
+    client:only="vue"
+  />
 </BaseLayout>
