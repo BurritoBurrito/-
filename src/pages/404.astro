@@ -1,12 +1,28 @@
 ---
 import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/404.vue';
+import JsonLd from '../layouts/JsonLd.astro';
 import '../assets/global.css';
 
+const siteUrl = 'https://burritoedition.com';
+
+const description = 'Page not found on Burrito Edition. Return to thousands of free Flash games and browser games waiting for you. Explore our full collection and start playing!';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: '404 - Page Not Found',
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
 ---
 
-<BaseLayout title={`404`} description='Page not found on Burrito Edition. Return to thousands of free Flash games and browser games waiting for you. Explore our full collection and start playing!'>
-    <GameGrid
-      client:only="vue"
-    />
+<BaseLayout title="404" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+  </head>
+
+  <GameGrid
+    client:only="vue"
+  />
 </BaseLayout>

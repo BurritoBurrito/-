@@ -1,14 +1,43 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
 import GameGrid from '../../componets/search.vue';
+import JsonLd from '../../layouts/JsonLd.astro';
 import data from '../../../public/top500games.json';
 import '../../assets/global.css';
 
 const games = data.games;
+
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/content/search/`; // adjust to your actual route
+
+const description ='Search thousands of Flash games and browser titles on Burrito Edition. Find specific games fast with our powerful search engine. Start your game discovery now!';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebPage', 'SearchResultsPage'],
+  name: 'Search',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Search', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`Search`} description='Search thousands of Flash games and browser titles on Burrito Edition. Find specific games fast with our powerful search engine. Start your game discovery now!'>
-    <GameGrid 
-        client:only="vue"
-    />
+<BaseLayout title="Search" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid 
+    client:only="vue"
+  />
 </BaseLayout>

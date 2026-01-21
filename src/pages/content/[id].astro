@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/baseLayout.astro';
+import JsonLd from '../../layouts/JsonLd.astro';
 import data from '../../../public/top500games.json';
 import GameGrid from '../../componets/GameGrid.vue';
 import '../../assets/global.css';
@@ -11,14 +12,45 @@ export function getStaticPaths() {
   }));
 }
 
-
 const { game } = Astro.props;
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/content/${game.gameId}/`;
+const gameLogo = "/imgs/gameLogo/" + game.logoUrl
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: game.title,
+  url: pageUrl,
+  description: game.originalDescription || `${game.title} - Flash game on BurritoEdition`,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const videoGameSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: game.title,
+  alternateName: game.alternateTitles || undefined,
+  url: pageUrl,
+  image: gameLogo,
+  description: webPageSchema.description,
+  author: game.developer && { '@type': 'Person', name: game.developer },
+  publisher: game.publisher && { '@type': 'Organization', name: game.publisher },
+  datePublished: game.releaseDate || undefined,
+  inLanguage: game.language || 'en',
+  gamePlatform: game.platform,
+  playMode: game.playMode,
+};
 ---
 
 <BaseLayout title={game.title} description={game.originalDescription} >
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={videoGameSchema} />
+  </head>
     <GameGrid
     currentGame={game}
     client:only="vue"
   />
-  <script is:inline src="../../src/assets/js/jszip.min.js"></script>
+  <script is:inline src="/js/jszip.min.js"></script>
 </BaseLayout>

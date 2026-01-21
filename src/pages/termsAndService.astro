@@ -1,12 +1,40 @@
 ---
 import BaseLayout from '../layouts/baseLayout.astro';
 import GameGrid from '../componets/termsAndService.vue';
+import JsonLd from '../layouts/JsonLd.astro';
 import '../assets/global.css';
 
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/termsAndService/`; // adjust to your actual route
+
+const description = 'Burrito Edition Terms of Service for Flash games and browser gaming platform. Understand usage rules, content guidelines, and community standards for all players.';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Terms of Service',
+  url: pageUrl,
+  description,
+  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Terms of Service', item: pageUrl }
+  ]
+};
 ---
 
-<BaseLayout title={`Terms And Service`} description='Burrito Edition Terms of Service for Flash games and browser gaming platform. Understand usage rules, content guidelines, and community standards for all players.'>
-    <GameGrid
-      client:only="vue"
-    />
+<BaseLayout title="Terms And Service" description={description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={breadcrumbSchema} />
+  </head>
+
+  <GameGrid
+    client:only="vue"
+  />
 </BaseLayout>

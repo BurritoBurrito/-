@@ -145,12 +145,45 @@ const formattedDescription = computed(() => {
     .join('');
 });
 
+/* --------------- HTML5 GAME LOADER --------------- */
+
+function loadHTML5GameFromFolder(gameUrl, container) {
+  // Normalize: ensure it’s an absolute URL under /html5
+  let src = gameUrl || '';
+  
+  // If launchCommand is just a folder name like "cookieclicker"
+  if (!src.startsWith('/')) {
+    // Prefix with /html5/
+    src = `/html5/${src}`;
+  }
+
+  // If it doesn’t end with .html or slash, assume folder and add trailing slash
+  const lower = src.toLowerCase();
+  if (!lower.endsWith('.html') && !lower.endsWith('/')) {
+    src = src + '/';
+  }
+
+  // Optional: if you *always* use index.html, you can force it:
+  if (lower.endsWith('/')) src = src + 'index.html';
+
+  container.innerHTML = '';
+
+  const iframe = document.createElement('iframe');
+  iframe.src = src;
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = 'none';
+  iframe.allowFullscreen = true;
+
+  container.appendChild(iframe);
+}
+
 /* ----------------- RUFFLE LOADER ----------------- */
 
 async function loadRuffle() {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = '../../../src/assets/js/ruffle/ruffle.js';
+    script.src = '/js/ruffle/ruffle.js';
     script.async = true;
     script.onload = () => {
       window.RufflePlayer = window.RufflePlayer || {};
@@ -169,7 +202,7 @@ async function initFlashPlayer() {
   }
 
   window.RufflePlayer.config = {
-    publicPath: '../../../src/assets/js/ruffle/',
+    publicPath: '/js/ruffle/',
     polyfills: true,
     autoplay: 'on',
     unmuteOverlay: 'hidden',
@@ -247,10 +280,14 @@ function bookmark(event) {
 
 function toggleFullscreen() {
   const container = document.getElementById('container');
-  if (!container) return;
+  const iframe = container?.querySelector('iframe');
+  const canvas = container?.querySelector('canvas');
+
+  const target = iframe || canvas || container;
+  if (!target) return;
 
   if (!document.fullscreenElement) {
-    container.requestFullscreen().catch((err) => {
+    target.requestFullscreen().catch((err) => {
       console.error('Failed to enable fullscreen:', err);
     });
   } else {
@@ -374,12 +411,18 @@ async function initAlsoPlay() {
   }
 }
 
-
-
 /* ----------------- LIFECYCLE ----------------- */
 
 onMounted(async () => {
-  await initFlashPlayer();
+  const container = document.getElementById('container');
+  if (!container) return;
+
+  if (props.currentGame.platform === 'Flash') {
+    await initFlashPlayer();
+  } else if (props.currentGame.platform === 'HTML5') {
+    const gameUrl = props.currentGame.launchCommand;
+    loadHTML5GameFromFolder(gameUrl, container);
+  }
 
   const bookmarkBtn = document.getElementById('bookmarkBtn');
   if (bookmarkBtn) {

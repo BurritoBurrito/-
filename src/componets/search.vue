@@ -1,6 +1,6 @@
-<!-- src/components/GameSearch.vue -->
+<!-- src/components/search.vue -->
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 
 const getLogoSync = (logoFile) => {
   return "/imgs/gameLogo/" + logoFile
@@ -22,6 +22,25 @@ onMounted(async () => {
   const res = await fetch('/top500games.json');
   const data = await res.json();
   allGames.value = data.games || data;
+
+  // Read ?q= from URL on page load
+  const urlParams = new URLSearchParams(window.location.search);
+  const qParam = urlParams.get('q');
+  if (qParam) {
+    searchQuery.value = qParam;
+  }
+});
+
+// Update URL when search query changes
+watch(searchQuery, (newQuery) => {
+  const url = new URL(window.location);
+  if (newQuery.trim()) {
+    url.searchParams.set('q', newQuery.trim());
+  } else {
+    url.searchParams.delete('q');
+  }
+  // Update URL without reloading page
+  window.history.replaceState({}, '', url);
 });
 
 function sampleRandom(arr, n) {
