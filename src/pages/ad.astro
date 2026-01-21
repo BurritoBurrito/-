@@ -8,13 +8,44 @@ const title = 'Ad Page';
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- AdSense -->
+    <!-- AdSense (for other pages, fine to keep) -->
     <script
       is:inline
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Google Publisher Tag (GAM) -->
+    <script
+      is:inline
+      async
+      src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+      crossorigin="anonymous"
+    ></script>
+    <script is:inline>
+      window.googletag = window.googletag || { cmd: [] };
+
+      googletag.cmd.push(function () {
+        var mapping = googletag.sizeMapping()
+          .addSize([1024, 0], [[970, 250], [728, 90]])   // desktop
+          .addSize([768, 0],  [[728, 90], [468, 60]])    // tablet
+          .addSize([0, 0],    [[300, 250], [320, 50]])   // mobile
+          .build();
+
+        googletag
+          .defineSlot(
+            '/23335597477/EnuV2',
+            [[970, 250], [728, 90], [468, 60], [300, 250], [320, 50]],
+            'div-gpt-ad-1769033141714-0'
+          )
+          .defineSizeMapping(mapping)
+          .addService(googletag.pubads());
+
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
 
     <style is:global>
       * {
@@ -25,8 +56,8 @@ const title = 'Ad Page';
       body {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
-        background: #050608;          /* --bg */
-        color: #f7f3ea;               /* --color-text-main */
+        background: #050608;
+        color: #f7f3ea;
       }
 
       .wrap {
@@ -40,23 +71,23 @@ const title = 'Ad Page';
       .card {
         max-width: 420px;
         width: 100%;
-        background: #090a10;          /* --bg-discription */
+        background: #090a10;
         border-radius: 12px;
         padding: 20px 18px 16px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55); /* --box-shadow */
-        border: 1px solid #3b2a1a;    /* --border */
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+        border: 1px solid #3b2a1a;
         text-align: center;
       }
 
       .title {
         font-size: 1.25rem;
         margin-bottom: 6px;
-        color: #f6b756;               /* --accent */
+        color: #f6b756;
       }
 
       .text {
         font-size: 0.9rem;
-        color: #b3a9a0;               /* --color-text-muted */
+        color: #b3a9a0;
         margin-bottom: 10px;
       }
 
@@ -80,16 +111,14 @@ const title = 'Ad Page';
           Burrito Edition online for everyone.
         </p>
 
-        <!-- Enu ad unit -->
+        <!-- EnuV2 GPT ad unit -->
         <div class="ad-wrap">
-          <ins
-            class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-1658760822270324"
-            data-ad-slot="6700820812"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          ></ins>
+          <!-- /23335597477/EnuV2 -->
+          <div id='div-gpt-ad-1769033457756-0' style='min-width: 300px; min-height: 50px;'>
+            <script is:inline>
+              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1769033457756-0'); });
+            </script>
+          </div>
         </div>
 
         <p class="small">
@@ -99,12 +128,6 @@ const title = 'Ad Page';
       </div>
     </div>
 
-    <script is:inline>
-      if (typeof window !== 'undefined') {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
-    </script>
-
     <!-- Google Analytics Tags -->
     <script
       is:inline
@@ -113,7 +136,9 @@ const title = 'Ad Page';
     ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
       gtag('config', 'G-TW1C8W4K8F');
     </script>
