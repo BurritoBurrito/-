@@ -23,6 +23,7 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/content/allGames" class="nav-link">All Games</a>
       <a href="/tag" class="nav-link">Tags</a>
+      <a href="/hubs" class="nav-link">Articles</a>
       <a href="/content/search" class="nav-link">Search</a>
     </div>
   </nav>

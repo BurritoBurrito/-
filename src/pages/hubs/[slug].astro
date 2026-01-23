@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/baseLayout.astro';
+import JsonLd from '../../layouts/JsonLd.astro';
+import '../../assets/global.css';
+import HubPage from '../../componets/hubPage.vue';
+import data from '../../../public/top500games.json';
+import {
+  getCollection,
+  render,
+  type CollectionEntry
+} from 'astro:content';
+
+type HubEntry = CollectionEntry<'hubs'>;
+
+export async function getStaticPaths() {
+  const hubs = await getCollection('hubs');
+
+  return hubs.map((entry: HubEntry) => ({
+    params: { slug: entry.data.slug },
+    props: { hubEntry: entry }
+  }));
+}
+
+const { hubEntry } = Astro.props as { hubEntry: HubEntry };
+const hub = hubEntry.data;
+const rawMarkdown = hubEntry.body;
+
+// Render Markdown to HTML string
+const { html } = await render(hubEntry);
+
+// Map games JSON
+const games = data.games.map((g: any) => ({
+  id: g.gameId,
+  title: g.title,
+  url: `/content/${g.gameId}`,
+  thumb: g.logoUrl || g.title,
+  tags: g.tags,
+  shortDescription: g.originalDescription
+}));
+
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/hubs/${hub.slug}/`;
+
+// Filter the games actually shown on this hub (gameIds or tagFilters)
+let hubGames = games;
+if (hub.gameIds && hub.gameIds.length > 0) {
+  const idSet = new Set(hub.gameIds);
+  hubGames = games.filter((g) => idSet.has(g.id));
+} else if (hub.tagFilters && hub.tagFilters.length > 0) {
+  const tagSet = new Set(
+    hub.tagFilters.map((t: any) => String(t).toLowerCase())
+  );
+  hubGames = games.filter(
+    (g) =>
+      g.tags &&
+      g.tags.some((t: any) => tagSet.has(String(t).toLowerCase()))
+  );
+}
+
+// WebPage schema for the pillar
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: hub.title,
+  url: pageUrl,
+  description:
+    hub.description ||
+    `${hub.title} – Play free browser games online on BurritoEdition.`,
+  isPartOf: {
+    '@type': 'WebSite',
+    url: siteUrl,
+    name: 'BurritoEdition'
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: hubGames.slice(0, 200).map((game, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `${siteUrl}${game.url}`,
+      name: game.title
+    })),
+    numberOfItems: hubGames.length
+  }
+};
+
+// Optional: describe the hub itself as a VideoGame collection
+const hubCollectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: hub.title,
+  url: pageUrl,
+  description: webPageSchema.description,
+  itemListElement: hubGames.slice(0, 200).map((game, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'VideoGame',
+      name: game.title,
+      url: `${siteUrl}${game.url}`
+    }
+  })),
+  numberOfItems: hubGames.length
+};
+---
+
+<BaseLayout title={hub.title} description={hub.description}>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+    <JsonLd data={hubCollectionSchema} />
+  </head>
+
+  <script
+      is:inline
+      async
+      src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+      crossorigin="anonymous"
+    ></script>
+    <script is:inline>
+      window.googletag = window.googletag || { cmd: [] };
+    
+      googletag.cmd.push(function () {
+        var mapping = googletag.sizeMapping()
+          .addSize([1024, 0], [[970, 250], [728, 90]])   // desktop
+          .addSize([768, 0],  [[728, 90], [468, 60]])    // tablet
+          .addSize([0, 0],    [[300, 250], [320, 50]])   // mobile
+          .build();
+      
+        googletag
+          .defineSlot(
+            '/23335597477/EnuV2',
+            [[970, 250], [728, 90], [468, 60], [300, 250], [320, 50]],
+            'div-gpt-ad-1769091989764-0'
+          )
+          .defineSizeMapping(mapping)
+          .addService(googletag.pubads());
+      
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+  </script>
+
+  <HubPage
+    hub={{ ...hub, introHtml: html, rawMarkdown: rawMarkdown }}
+    games={games}
+    client:only="vue"
+  />
+
+
+
+</BaseLayout>

@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/baseLayout.astro';
+import JsonLd from '../../layouts/JsonLd.astro';
+import '../../assets/global.css';
+import {
+  getCollection,
+  render,
+  type CollectionEntry
+} from 'astro:content';
+
+type HubEntry = CollectionEntry<'hubs'>;
+
+const siteUrl = 'https://burritoedition.com';
+const pageUrl = `${siteUrl}/hubs/`;
+
+// Load all hubs (your article / pillar pages)
+const hubs = await getCollection('hubs');
+
+const renderedHubs = await Promise.all(
+  hubs.map(async (entry) => {
+    const { html } = await render(entry);
+    const data = entry.data;
+
+    return {
+      slug: data.slug,
+      title: data.title,
+      description:
+        data.description ||
+        `${data.title} – Play free browser games online on BurritoEdition.`,
+      heroSubtitle: data.heroSubtitle,
+      tagFilters: data.tagFilters || [],
+      html,
+      rawMarkdown: entry.body
+    };
+  })
+);
+
+// Schema for the hub-of-hubs page
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Game Articles & Hubs – Burrito Edition',
+  url: pageUrl,
+  description:
+    'Browse Burrito Edition articles and hubs about unblocked games, browser Flash games, HTML5 games, and free online games.',
+  isPartOf: {
+    '@type': 'WebSite',
+    url: siteUrl,
+    name: 'BurritoEdition'
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: renderedHubs.map((hub, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `${siteUrl}/hubs/${hub.slug}/`,
+      name: hub.title
+    })),
+    numberOfItems: renderedHubs.length
+  }
+};
+---
+
+<BaseLayout
+  title="Game Articles & Hubs – Burrito Edition"
+  description="Explore Burrito Edition articles and hubs about unblocked games, browser Flash games, HTML5 titles, and free online games."
+>
+  <head slot="head">
+    <JsonLd data={webPageSchema} />
+  </head>
+
+  <main class="articles-hub">
+    <header class="mb-6">
+      <h1>Game Articles & Hubs</h1>
+      <p>
+        Browse all Burrito Edition articles, including guides for unblocked games,
+        browser Flash games, HTML5 games, and free online games.
+      </p>
+    </header>
+
+    <section class="space-y-4">
+      {renderedHubs.map((hub) => (
+        <article>
+          <a href={`/hubs/${hub.slug}/`}>
+            <h2>{hub.title}</h2>
+
+            {hub.heroSubtitle && (
+              <p class="subtitle">
+                {hub.heroSubtitle}
+              </p>
+            )}
+
+            <p class="description">
+              {hub.description}
+            </p>
+
+            {hub.tagFilters && hub.tagFilters.length > 0 && (
+              <p class="tags">
+                Tags: {hub.tagFilters.join(', ')}
+              </p>
+            )}
+
+            <p class="cta">
+              Read article →
+            </p>
+          </a>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
