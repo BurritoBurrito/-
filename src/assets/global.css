@@ -751,7 +751,7 @@ main{
 
 .gameGroupTag {
   color: var(--accent);
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .viewHeader p{
@@ -1102,4 +1102,26 @@ main{
   .articles-hub article a {
     padding: 0.9rem 1rem 1rem;
   }
+}
+
+.popular-toggle {
+  display: flex;
+  gap: 0.35rem;
+  margin-right: 1rem;
+}
+
+.popular-btn {
+  border-radius: 999px;
+  border: 1px solid var(--accent-soft);
+  background: transparent;
+  color: var(--accent-soft);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.7rem;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+
+.popular-btn--active {
+  background: var(--accent-soft);
+  color: var(--bg);
 }

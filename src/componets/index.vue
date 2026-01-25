@@ -28,11 +28,15 @@
                 <div class="newGames"></div>
             </div>
             <div class="gameViewWarperVertical">
-                <div class="viewHeader">
-                    <p class="gameGroupTag">Popular Games</p>
-                    <a href="/content/allGames" class="viewAllGamesTag">View all Popular→</a>
+              <div class="viewHeader">
+                <p class="gameGroupTag">Popular Games</p>
+                <div class="popular-toggle">
+                  <button data-range="today" class="popular-btn">Today</button>
+                  <button data-range="week" class="popular-btn popular-btn--active">Week</button>
+                  <button data-range="allTime" class="popular-btn">All‑time</button>
                 </div>
-                <div class="popularGames"></div>
+              </div>
+              <div class="popularGames"></div>
             </div>
         </div>
         <div class="gameViewWraper">
@@ -62,10 +66,7 @@
 <script setup>
 import { onMounted } from 'vue';
 
-const getLogoSync = (logoFile) => {
-  return "/imgs/gameLogo/" + logoFile
-};
-
+const getLogoSync = (logoFile) => "/imgs/gameLogo/" + logoFile;
 
 const BOOKMARK_KEY = 'be_bookmarks';
 const CONTINUE_KEY = 'be_continue';
@@ -81,88 +82,87 @@ function loadIdArray(key) {
   }
 }
 
+function extractGameId(path) {
+  return path.match(/\/content\/(.+?)\//)?.[1] || path.match(/\/content\/(.+)/)?.[1] || '';
+}
+
 async function initHomeSections() {
-  const res = await fetch('/top500games.json');
-  if (!res.ok) {
+  const topRes = await fetch('/top500games.json');
+  if (!topRes.ok) {
     console.error('Failed to load top500games.json');
     return;
   }
-  const data = await res.json();
-  const games = data.games ?? data;
+  const topData = await topRes.json();
+  const games = topData.games ?? topData;
+
+  let analyticsData = null;
+  try {
+    const analyticsRes = await fetch('https://analytics.burritoedition.com/top-games.json');
+    if (analyticsRes.ok) {
+      analyticsData = await analyticsRes.json();
+    }
+  } catch (e) {
+    console.warn('Failed to load analytics top games', e);
+  }
 
   function truncateAtSpace(str, maxLen = 50) {
     if (!str) return '';
     if (str.length <= maxLen) return str;
     const truncated = str.slice(0, maxLen);
     const lastSpace = truncated.lastIndexOf(' ');
-    const clean =
-      lastSpace > 0 ? truncated.slice(0, lastSpace).trim() : truncated.trim();
+    const clean = lastSpace > 0 ? truncated.slice(0, lastSpace).trim() : truncated.trim();
     return clean + '...';
   }
 
   function renderSection(selector, gamesList, maxItems = 6) {
     const container = document.querySelector(selector);
     if (!container) return;
-
     const slice = gamesList.slice(0, maxItems);
     container.classList.add('section-grid');
-
-    container.innerHTML = slice
-      .map(
-        (g) => `
-        <div class="game-card">
-          <a href="/content/${encodeURIComponent(g.gameId)}">
-            <div class="thumb">
-              <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
-            </div>
-          </a>
-          <a href="/content/${encodeURIComponent(g.gameId)}">
-            <div class="titleCard">${g.title}</div>
-            <div class="card-discription">
-              ${truncateAtSpace(g.originalDescription)}
-            </div>
-          </a>
-        </div>
-      `,
-      )
-      .join('');
+    container.innerHTML = slice.map((g) => `
+      <div class="game-card">
+        <a href="/content/${encodeURIComponent(g.gameId)}">
+          <div class="thumb">
+            <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
+          </div>
+        </a>
+        <a href="/content/${encodeURIComponent(g.gameId)}">
+          <div class="titleCard">${g.title}</div>
+          <div class="card-discription">
+            ${truncateAtSpace(g.originalDescription)}
+          </div>
+        </a>
+      </div>
+    `).join('');
   }
 
-    function renderSERTIAN(selector, gamesList, maxItems = 6) {
+  function renderVertical(selector, gamesList, maxItems = 6) {
     const container = document.querySelector(selector);
     if (!container) return;
-
     const slice = gamesList.slice(0, maxItems);
     container.classList.add('section-grid');
-
-    container.innerHTML = slice
-      .map(
-        (g) => `
-        <div class="game-card-fixed">
-          <a href="/content/${encodeURIComponent(g.gameId)}">
-            <div class="thumb">
-              <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
-            </div>
-          </a>
-          <a href="/content/${encodeURIComponent(g.gameId)}">
-            <div class="titleCard">${g.title}</div>
-            <div class="card-discription">
-              ${truncateAtSpace(g.originalDescription)}
-            </div>
-          </a>
-        </div>
-      `,
-      )
-      .join('');
+    container.innerHTML = slice.map((g) => `
+      <div class="game-card-fixed">
+        <a href="/content/${encodeURIComponent(g.gameId)}">
+          <div class="thumb">
+            <img src="${getLogoSync(g.logoUrl)}" alt="${g.title}">
+          </div>
+        </a>
+        <a href="/content/${encodeURIComponent(g.gameId)}">
+          <div class="titleCard">${g.title}</div>
+          <div class="card-discription">
+            ${truncateAtSpace(g.originalDescription)}
+          </div>
+        </a>
+      </div>
+    `).join('');
   }
 
   function pickRandom(list, count) {
     const copy = list.slice();
     for (let i = copy.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      const tmp = copy[i];
-      copy[i] = copy[j];
-      copy[j] = tmp;
+      [copy[i], copy[j]] = [copy[j], copy[i]];
     }
     return copy.slice(0, count);
   }
@@ -170,32 +170,20 @@ async function initHomeSections() {
   const bookmarkIds = loadIdArray(BOOKMARK_KEY);
   const continueIds = loadIdArray(CONTINUE_KEY);
 
-  const bookmarkedGames = games.filter((g) =>
-    bookmarkIds.includes(g.gameId),
-  );
-
-  const continuePlayingGames = games.filter((g) =>
-    continueIds.includes(g.gameId),
-  );
+  const bookmarkedGames = games.filter((g) => bookmarkIds.includes(g.gameId));
+  const continuePlayingGames = games.filter((g) => continueIds.includes(g.gameId));
 
   function hideSectionIfEmpty(selector, gamesList) {
     if (gamesList.length) return;
     const container = document.querySelector(selector);
     if (!container) return;
-    // Instead of display:none on the wrapper, just show a small message
     container.classList.add('section-grid');
     container.innerHTML = '<p>No games yet.</p>';
   }
 
-
   const newGames = games.slice(-6);
-  const popularGames = games;
-  const actionGames = games.filter((g) =>
-    (g.tags || []).includes('Action'),
-  );
-  const puzzleGames = games.filter((g) =>
-    (g.tags || []).includes('Puzzle'),
-  );
+  const actionGames = games.filter((g) => (g.tags || []).includes('Action'));
+  const puzzleGames = games.filter((g) => (g.tags || []).includes('Puzzle'));
   const randomGames = pickRandom(games, 20);
 
   hideSectionIfEmpty('.continuePlaying', continuePlayingGames);
@@ -208,18 +196,56 @@ async function initHomeSections() {
     renderSection('.bookmarketedGames', bookmarkedGames);
   }
 
-  renderSERTIAN('.newGames', newGames);
-  renderSERTIAN('.popularGames', popularGames);
+  renderVertical('.newGames', newGames);
   renderSection('.actionTagedGames', actionGames);
   renderSection('.puzzleTagedGames', puzzleGames);
   renderSection('.randomTagedGames', randomGames);
+
+  // --- Popular slider logic ---
+  function getPopularList(rangeKey) {
+    if (!analyticsData || !analyticsData[rangeKey]) {
+
+      return games.slice(0, 6);
+    }
+    const list = analyticsData[rangeKey]
+      .slice()  // shallow copy before sort
+      .sort((a, b) => b.views - a.views);
+    const mapped = list.map((item) => {
+      const gameId = extractGameId(item.path);
+      const game = games.find((g) => g.gameId === gameId);
+      return game ? { ...game, views: item.views } : null;
+    }).filter(Boolean);
+    return mapped.slice(0, 6);
+  }
+
+  function renderPopular(rangeKey) {
+    const popularList = getPopularList(rangeKey);
+    renderVertical('.popularGames', popularList);
+  }
+
+  // Initial state: today
+  renderPopular('week');
+
+  const toggleContainer = document.querySelector('.popular-toggle');
+  if (toggleContainer) {
+    toggleContainer.addEventListener('click', (evt) => {
+      const btn = evt.target.closest('.popular-btn');
+      if (!btn) return;
+      const range = btn.getAttribute('data-range');
+      if (!range) return;
+      toggleContainer.querySelectorAll('.popular-btn').forEach((b) => {
+        b.classList.toggle('popular-btn--active', b === btn);
+      });
+      renderPopular(range);
+    });
+  }
 }
 
 onMounted(() => {
   initHomeSections().catch((err) => {
     console.error('Failed to init home sections', err);
   });
-  
+
   setTimeout(() => {
     document.querySelector('.mainView')?.style.removeProperty('will-change');
     document.querySelector('.site-footer')?.style.removeProperty('will-change');
