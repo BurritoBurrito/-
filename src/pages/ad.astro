@@ -62,12 +62,6 @@ const title = 'Ad Page';
         margin-top: 8px;
       }
 
-      #video-ad {
-        width: 100%;
-        max-width: 640px;
-        height: 360px;
-        background: #000;
-      }
     </style>
   </head>
   <body>
@@ -80,7 +74,19 @@ const title = 'Ad Page';
         </p>
 
         <div class="ad-wrap">
-          <video id="video-ad" playsinline muted controls></video>
+          <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324"
+               crossorigin="anonymous"></script>
+          <!-- Enu -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-1658760822270324"
+               data-ad-slot="6700820812"
+               data-ad-format="auto"
+               data-full-width-responsive="true">
+          </ins>
+          <script is:inline>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
         </div>
 
         <p class="small">
@@ -90,69 +96,6 @@ const title = 'Ad Page';
       </div>
     </div>
 
-    <script is:inline>
-      (function () {
-        const vastUrl =
-          "https://pubads.g.doubleclick.net/gampad/live/ads?iu=/23335597477/VAST_SITE&description_url=https%3A%2F%2Fburritoedition.com%2Fad%2F&tfcd=0&npa=0&sz=640x480&ciu_szs=300x250%2C336x280&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator=" +
-          Date.now();
-
-        const video = document.getElementById("video-ad");
-        if (!video) return;
-
-        function parseVAST(xmlText) {
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-
-          // Check for parse errors
-          if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
-            console.error("VAST XML parse error");
-            return null;
-          }
-
-          // Try to find MediaFile in Linear/Inline structure
-          const linearAds = xmlDoc.querySelectorAll("Linear");
-          for (const linear of linearAds) {
-            const mediaFiles = linear.querySelectorAll("MediaFile");
-            for (const mediaFile of mediaFiles) {
-              const type = mediaFile.getAttribute("type") || "";
-              const url = mediaFile.textContent.trim();
-              
-              // Prefer video/mp4, but accept other types
-              if (url && (type.includes("video/mp4") || type.includes("video"))) {
-                return url;
-              }
-            }
-          }
-
-          // Fallback: get any MediaFile
-          const anyMediaFile = xmlDoc.querySelector("MediaFile");
-          if (anyMediaFile) {
-            return anyMediaFile.textContent.trim();
-          }
-
-          return null;
-        }
-
-        fetch(vastUrl)
-          .then((r) => {
-            if (!r.ok) throw new Error(`HTTP ${r.status}`);
-            return r.text();
-          })
-          .then((xmlText) => {
-            console.log("VAST response received");
-            const mediaUrl = parseVAST(xmlText);
-            
-            if (mediaUrl) {
-              console.log("Media URL:", mediaUrl);
-              video.src = mediaUrl;
-              video.play().catch((err) => console.error("Playback error:", err));
-            } else {
-              console.warn("No valid media file found in VAST response");
-            }
-          })
-          .catch((err) => console.error("VAST load error:", err));
-      })();
-    </script>
 
     <!-- Google Analytics Tags -->
     <script
