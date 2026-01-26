@@ -8,6 +8,32 @@ const title = 'Ad Page';
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- AdSense (for other pages, fine to keep) -->
+    <script
+      is:inline
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Google Publisher Tag (GAM) -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script is:inline>
+      window.googletag = window.googletag || { cmd: [] };
+      googletag.cmd.push(function () {
+        googletag
+          .defineSlot(
+            '/23335597477/EnuV2',
+            [[300, 50], [468, 60], [300, 250], [728, 90], [970, 250]],
+            'div-gpt-ad-1769462797783-0'
+          )
+          .addService(googletag.pubads());
+      
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
+
     <style is:global>
       * {
         margin: 0;
@@ -30,8 +56,7 @@ const title = 'Ad Page';
       }
 
       .card {
-        width: 80vw;
-        max-width: 900px;
+        width: auto;
         background: #090a10;
         border-radius: 12px;
         padding: 20px 18px 16px;
@@ -60,8 +85,13 @@ const title = 'Ad Page';
 
       .ad-wrap {
         margin-top: 8px;
+        width: auto;
       }
 
+      #div-gpt-ad-1769462797783-0 {
+        width: auto;
+        height: auto;
+      }
     </style>
   </head>
   <body>
@@ -73,19 +103,13 @@ const title = 'Ad Page';
           Burrito Edition online for everyone.
         </p>
 
-        <div class="ad-wrap">
-          <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324"
-               crossorigin="anonymous"></script>
-          <!-- Enu -->
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-1658760822270324"
-               data-ad-slot="6700820812"
-               data-ad-format="auto"
-               data-full-width-responsive="true">
-          </ins>
+        <!-- EnuV2 GPT ad unit -->
+        <!-- /23335597477/EnuV2 -->
+        <div id="div-gpt-ad-1769462797783-0" style="min-width:300px; min-height:50px;">
           <script is:inline>
-               (adsbygoogle = window.adsbygoogle || []).push({});
+            googletag.cmd.push(function () {
+              googletag.display('div-gpt-ad-1769462797783-0');
+            });
           </script>
         </div>
 
@@ -95,7 +119,6 @@ const title = 'Ad Page';
         </p>
       </div>
     </div>
-
 
     <!-- Google Analytics Tags -->
     <script
@@ -108,8 +131,8 @@ const title = 'Ad Page';
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag("js", new Date());
-      gtag("config", "G-TW1C8W4K8F");
+      gtag('js', new Date());
+      gtag('config', 'G-TW1C8W4K8F');
     </script>
   </body>
 </html>
