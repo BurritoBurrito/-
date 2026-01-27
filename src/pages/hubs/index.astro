@@ -12,6 +12,8 @@ type HubEntry = CollectionEntry<'hubs'>;
 
 const siteUrl = 'https://burritoedition.com';
 const pageUrl = `${siteUrl}/hubs/`;
+const defaultImage = `${siteUrl}/imgs/favicon/burritoMan.png`;
+
 
 // Load all hubs (your article / pillar pages)
 const hubs = await getCollection('hubs');
@@ -64,6 +66,7 @@ const webPageSchema = {
 <BaseLayout
   title="Game Articles & Hubs – Burrito Edition"
   description="Explore Burrito Edition articles and hubs about unblocked games, browser Flash games, HTML5 titles, and free online games."
+  image={defaultImage}
 >
   <head slot="head">
     <JsonLd data={webPageSchema} />
