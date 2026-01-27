@@ -5,28 +5,43 @@ import TopNav from '../componets/topNav.vue';
 import SiteFooter from '../componets/footer.vue';
 
 export interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  image?: string;
 }
 
+const siteUrl = "https://burritoedition.com";
+const siteName = "Burrito Edition";
+const url = Astro.url;
+const canonical = new URL(url.pathname + url.search, siteUrl).toString();
+const defaultImage = `${siteUrl}/imgs/favicon/burritoMan.png`;
+
+
 const {
-  title = "Play Games Free Online | Burrito edition",
-  description = "Play thousands of free Flash games & browser games instantly on Burrito Edition - no downloads needed. Nostalgic arcade fun, daily updates, and endless entertainment for gamers everywhere. Play now!"
+  title = "Play Free Unblocked Games Online – Flash & HTML5 Classics",
+  description = "Play free unblocked browser games, classic Flash titles, and modern HTML5 games on Burrito Edition. No downloads, instant play at school, work, or home.",
+  image = defaultImage
 } = Astro.props;
 
-const siteUrl = "https://burritoedition.com";
+const ogImage = Astro.props?.image || defaultImage;
+
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "BurritoEdition",
+  name: siteName,
   url: siteUrl,
   potentialAction: {
     "@type": "SearchAction",
     target: `${siteUrl}/search/?q={search_term_string}`,
-    "query-input": "required name=search_term_string"
+    "query-input": {
+      "@type": "PropertyValueSpecification",
+      valueRequired: true,
+      valueName: "search_term_string"
+    }
   }
 };
+
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -41,10 +56,23 @@ const orgSchema = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{title} | Burrito Edition</title>
+    <title>{title.includes(siteName) ? title : `${title} | ${siteName}`}</title>
     <meta name="description" content={description}>
+    <link rel="canonical" href={canonical} />
     <JsonLd data={websiteSchema} />
     <JsonLd data={orgSchema} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="icon" type="image/png" href='/imgs/favicon/favicon-96x96.png' sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href='/imgs/favicon/favicon.svg' />
     <link rel="shortcut icon" href='imgs/favicon/favicon.ico' />

@@ -6,24 +6,80 @@ import '../assets/global.css';
 
 const siteUrl = 'https://burritoedition.com';
 
-const description = 'Play thousands of free Flash games and browser games instantly on Burrito Edition - no downloads needed. Daily updates and endless entertainment for gamers everywhere. Play now!';
+const title = "Play Free Unblocked Games Online – Flash & HTML5 Classics";
+const description =
+  "Play free unblocked browser games, classic Flash titles, and modern HTML5 games on Burrito Edition. No downloads, instant play at school, work, or home.";
+const image = `${siteUrl}/imgs/og-homepage.jpg`; // make this image
 
 const webPageSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Home',
+  '@type': 'CollectionPage',
+  name: 'Free Unblocked Games – Burrito Edition',
   url: siteUrl,
   description,
-  isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'BurritoEdition' }
+  isPartOf: {
+    '@type': 'WebSite',
+    url: siteUrl,
+    name: 'BurritoEdition'
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    name: 'Popular Game Categories',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'New Games', url: `${siteUrl}/content/allGames` },
+      { '@type': 'ListItem', position: 2, name: 'Action Games', url: `${siteUrl}/tag/Action` },
+      { '@type': 'ListItem', position: 3, name: 'Puzzle Games', url: `${siteUrl}/tag/Puzzle` },
+      { '@type': 'ListItem', position: 4, name: 'Popular Games', url: `${siteUrl}/content/bookmarked` }
+    ],
+    numberOfItems: 4
+  }
 };
 ---
 
-<BaseLayout title="Home" description={description}>
+<BaseLayout title={title} description={description} image={image}>
   <head slot="head">
     <JsonLd data={webPageSchema} />
   </head>
 
-  <GameGrid
-    client:only="vue"
-  />
+  <!-- SEO hero matching your style -->
+  <section class="home-hero">
+    <h1 class="home-hero-title">
+      Play Free Unblocked Games Online – Flash & HTML5 Classics
+    </h1>
+    <p class="home-hero-subtitle">
+      Discover 500+ unblocked browser games for school, work, or home. Classic Flash archives,
+      modern HTML5 titles, and nostalgic web games—no downloads needed.
+    </p>
+    <a href="/content/allGames" class="home-hero-cta">Browse All Games →</a>
+  </section>
+
+  <!-- Intro card styled like your descriptionbox/articles cards -->
+  <section class="home-intro-card">
+    <div class="home-intro-inner">
+      <h2 class="home-intro-title">Best Unblocked Games for School & Browser Play</h2>
+      <p>
+        Burrito Edition hosts free online games that work almost everywhere. Play Action games like
+        runners and shooters, tricky Puzzle levels, and preserved Flash classics in a safe,
+        fast-loading browser player.
+      </p>
+      <p>
+        Bookmark your favorites, continue playing where you left off, and explore new and popular
+        picks chosen from our archive of hundreds of titles.
+      </p>
+      <ul class="home-intro-list">
+        <li>- Unblocked browser games for school and work</li>
+        <li>- Classic Flash games preserved in one place</li>
+        <li>- Free HTML5 games, no downloads or sign-ups</li>
+        <li>- Daily new and trending game selections</li>
+      </ul>
+      <div class="home-intro-links">
+        <a href="/hubs/unblocked-games/" class="home-intro-link">Unblocked Games Guide →</a>
+        <a href="/tag/Action" class="home-intro-link">Action Games →</a>
+        <a href="/tag/Puzzle" class="home-intro-link">Puzzle Games →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Your existing Vue layout -->
+  <GameGrid client:only="vue" />
 </BaseLayout>

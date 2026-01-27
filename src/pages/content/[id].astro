@@ -43,7 +43,7 @@ const videoGameSchema = {
 };
 ---
 
-<BaseLayout title={game.title} description={game.originalDescription} >
+<BaseLayout title={game.title} description={game.originalDescription} image={gameLogo}>
   <head slot="head">
     <JsonLd data={webPageSchema} />
     <JsonLd data={videoGameSchema} />
