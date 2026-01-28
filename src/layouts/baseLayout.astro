@@ -107,6 +107,25 @@ const orgSchema = {
      .site-footer {
        will-change: contents;
      }
+    
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .game-player {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .game-player > main {
+        flex: 1 0 auto;
+      }
     </style>
   </head>
   <body>

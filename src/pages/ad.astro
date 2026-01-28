@@ -49,63 +49,66 @@ googletag.enableServices();
 
 <style is:global>
 * {
-margin: 0;
-box-sizing: border-box;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html, body { 
+  height: 100%;
 }
 
 body {
-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-sans-serif;
-background: #050608;
-color: #f7f3ea;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #050608;
+  color: #f7f3ea;
+  height: 100%;
 }
 
 .wrap {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
 
 .card {
-        max-width: 420px;
-        width: 100%;
-        width: auto;
-background: #090a10;
-border-radius: 12px;
-padding: 20px 18px 16px;
-box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
-border: 1px solid #3b2a1a;
-text-align: center;
+  max-width: 420px;
+  width: 100%;
+  background: #090a10;
+  border-radius: 12px;
+  padding: 20px 18px 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+  border: 1px solid #3b2a1a;
+  text-align: center;
 }
 
 .title {
-font-size: 1.25rem;
-margin-bottom: 6px;
-color: #f6b756;
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+  color: #f6b756;
 }
 
 .text {
-font-size: 0.9rem;
-color: #b3a9a0;
-margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #b3a9a0;
+  margin-bottom: 10px;
 }
 
 .small {
-font-size: 0.75rem;
-color: #b3a9a0;
-margin-top: 8px;
+  font-size: 0.75rem;
+  color: #b3a9a0;
+  margin-top: 8px;
 }
 
 .ad-wrap {
-margin-top: 8px;
-        width: auto;
-      }
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
 
-      #div-gpt-ad-1769091989764-0 {
-        width: auto;
-        height: auto;
+#div-gpt-ad-1769091989764-0 {
+  margin: 0 auto;
 }
 </style>
 </head>
@@ -121,7 +124,7 @@ Burrito Edition online for everyone.
 <!-- EnuV2 GPT ad unit -->
 <div class="ad-wrap">
 <!-- /23335597477/EnuV2 -->
-<div id='div-gpt-ad-1769091989764-0' style='min-width: 300px; min-height: 50px;'>
+<div id='div-gpt-ad-1769091989764-0'>
 <script is:inline>
 googletag.cmd.push(function() { googletag.display('div-gpt-ad-1769091989764-0'); });
 </script>

@@ -74,6 +74,9 @@ html, body {
 
 main{
   min-height: 70vh;
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
 }
 
 .continuePlaying,
@@ -83,14 +86,14 @@ main{
 .actionTagedGames,
 .puzzleTagedGames,
 .randomTagedGames {
-  min-height: 260px;      /* tweak as needed to roughly fit 1 row */
+  min-height: 260px;
 }
 
 
 .game-player {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
   position: relative;
   background-color: var(--bg);
@@ -428,8 +431,7 @@ main{
 /* Footer */
 
 .site-footer {
-  width: 100vw;
-  bottom: 0px;
+  width: 100%;
   background: var(--bg-accent);
   border-top: 1px solid rgba(255,255,255,0.04);
   padding: 1.75rem 1.5rem 2.25rem;
