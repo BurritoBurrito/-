@@ -6332,7 +6332,33 @@
       "launchType": "zip",
       "flashpointId": "collegebowl",
       "logoUrlAlt": ""
+    },
+    {
+      "gameId": "AmongUsFnf",
+      "title": "FNF Among Us Unblocked - Impostor Mod",
+      "alternateTitles": "Among Us Friday Night Funkin, FNF vs Impostor Unblocked, Among Us FNF Mod Online",
+      "series": "Friday Night Funkin",
+      "developer": "Fan Community",
+      "publisher": "Fan Community",
+      "playMode": "Single Player",
+      "tags": ["html5", "Side View", "Fixed Screen", "Friday Night Funkin", "unblocked"],
+      "platform": "HTML5",
+      "library": "arcade",
+      "launchCommand": "amoungUsFnf/",
+      "applicationPath": "FPSoftware-portable.exe",
+      "originalDescription": "Among Us FNF is a Friday Night Funkin fan-made mod where you rap battle colorful crewmates and sus impostors from Among Us. Hit the arrow keys in time with the music to survive each song and complete every rhythm battle. This browser rhythm game combines the catchy FNF soundtrack style with the social deduction world of Among Us, featuring fast-paced charts, animated characters, and multiple difficulty levels for both beginners and experienced players.",
+      "status": "Playable",
+      "releaseDate": "",
+      "language": "en",
+      "notes": "",
+      "zipped": true,
+      "dateAdded": "2026-01-28T00:00:00.000Z",
+      "dateModified": "2026-01-28T00:00:00.000Z",
+      "logoUrl": "amoungUsFnf.webp",
+      "screenshotUrl": "",
+      "launchType": "zip",
+      "flashpointId": "amoungUsFnf",
+      "logoUrlAlt": ""
     }
-
   ]
 }
