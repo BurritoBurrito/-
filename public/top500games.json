@@ -5951,6 +5951,7 @@
       "publisher": "Y8",
       "playMode": "Single Player",
       "tags": [
+        "slope",
         "html5",
         "Arcade",
         "Runner",
@@ -6218,6 +6219,7 @@
       "publisher": "",
       "playMode": "Single Player",
       "tags": [
+        "Hollow Knight",
         "html5",
         "Platformer",
         "Action",
@@ -8769,33 +8771,6 @@
       "launchType": "zip",
       "logoUrl": "907eb061-2a03-4699-bd16-a8199b3a4d7e.webp",
       "logoUrlAlt": "https://infinity.unstable.life/images/Logos/90/7e/907eb061-2a03-4699-bd16-a8199b3a4d7e.png?type=jpg"
-    },
-    {
-      "gameId": "Extinct",
-      "title": "Extinct",
-      "alternateTitles": "",
-      "series": "",
-      "developer": "Benjamin Soule",
-      "publisher": "",
-      "playMode": "Single Player",
-      "tags": [
-        "Puzzle"
-      ],
-      "platform": "Flash",
-      "library": "arcade",
-      "launchCommand": "https://cdn.burritoedition.com/swf/Extinct.zip",
-      "applicationPath": "FPSoftware\\Flash\\flashplayer_32_sa.exe",
-      "originalDescription": "",
-      "status": "Playable",
-      "releaseDate": "",
-      "language": "en",
-      "notes": "",
-      "zipped": true,
-      "dateAdded": "2018-12-16T01:30:18.987Z",
-      "dateModified": "2023-11-05T06:00:51.123337Z",
-      "flashpointId": "80bd7fd6-d934-4b5b-af74-434ea3d0690d",
-      "launchType": "zip",
-      "logoUrl": "https://infinity.unstable.life/images/Logos/80/bd/80bd7fd6-d934-4b5b-af74-434ea3d0690d.png?type=jpg"
     },
     {
       "gameId": "Button_Betting",
