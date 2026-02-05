@@ -25,6 +25,22 @@ const {
 
 const ogImage = Astro.props?.image || defaultImage;
 
+function formatDescription(str:string) {
+  const min = 120;
+  const max = 150;
+
+  let result = str;
+
+  if (result.length < min) {
+    result = result + (result.endsWith(' ') ? '' : ' ') + 'description';
+  }
+
+  if (result.length > max) {
+    result = result.slice(0, max - 3) + '...';
+  }
+
+  return result;
+}
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -57,7 +73,7 @@ const orgSchema = {
   <head>
     <meta charset="utf-8" />
     <title>{title.includes(siteName) ? title : `${title} | ${siteName}`}</title>
-    <meta name="description" content={description}>
+    <meta name="description" content={formatDescription(description)}>
     <link rel="canonical" href={canonical} />
     <JsonLd data={websiteSchema} />
     <JsonLd data={orgSchema} />
