@@ -89,6 +89,44 @@ main{
   min-height: 260px;
 }
 
+.page-container {
+  display: flex;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 0;
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex: 1;
+  width: 1050px;
+}
+
+.sidebar-ads {
+  flex: 0 0 300px; 
+  min-height: 800px;
+  position: sticky;
+
+}
+
+@media (max-width: 1666px) {
+  .right-sidebar-ad {
+    flex: 0 0 300px !important;
+    width: 300px !important;
+  }
+  .left-sidebar-ad {
+    display: none; 
+  }
+}
+
+@media (max-width: 1350px) {
+  .right-sidebar-ad {
+    display: none;
+  }
+  .left-sidebar-ad {
+    display: none; 
+  }
+}
 
 .game-player {
   min-height: 100vh;

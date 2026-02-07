@@ -95,6 +95,17 @@ const orgSchema = {
     <link rel="apple-touch-icon" sizes="180x180" href='/imgs/favicon/apple-touch-icon.png' />
     <link rel="manifest" href='/site.webmanifest' />
     <link rel="preload" href="/top500games.json" as="fetch" crossorigin>
+
+
+    <script is:inline async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script is:inline>
+      window.googletag = window.googletag || {cmd: []};
+      googletag.cmd.push(function() {
+        googletag.defineSlot('/23335597477/SideySideRails', [[160, 600], [300, 600], [120, 600]], 'div-gpt-ad-1770493604749-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
     <style>
       .continuePlaying,
       .bookmarketedGames,
@@ -151,7 +162,29 @@ const orgSchema = {
 
         <!-- page content -->
         <main>
-          <slot />
+            <div class="page-container">
+                <aside class="sidebar-ads left-sidebar-ad">
+                  <!-- side raily ad slot -->
+                  <!-- /23335597477/SideySideRails -->
+                  <div id='div-gpt-ad-1770493604749-0' style='min-width: 120px; min-height: 600px;'>
+                    <script is:inline>
+                      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-0'); });
+                    </script>
+                  </div>
+                </aside>
+              <div class="main-content">
+                <slot />
+              </div>
+                <aside class="sidebar-ads right-sidebar-ad">
+                  <!-- side raily ad slot -->
+                  <!-- /23335597477/SideySideRails -->
+                  <div id='div-gpt-ad-1770493604749-1' style='min-width: 120px; min-height: 600px;'>
+                    <script is:inline>
+                      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-0'); });
+                    </script>
+                  </div>
+                </aside>
+            </div>
         </main>
 
         <!-- footer -->
