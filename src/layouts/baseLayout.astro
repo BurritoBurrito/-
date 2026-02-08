@@ -8,6 +8,7 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  showSideAds?: boolean;
 }
 
 const siteUrl = "https://burritoedition.com";
@@ -20,7 +21,8 @@ const defaultImage = `${siteUrl}/imgs/favicon/burritoMan.png`;
 const {
   title = "Play Free Unblocked Games Online – Flash & HTML5 Classics",
   description = "Play free unblocked browser games, classic Flash titles, and modern HTML5 games on Burrito Edition. No downloads, instant play at school, work, or home.",
-  image = defaultImage
+  image = defaultImage,
+  showSideAds = true
 } = Astro.props;
 
 const ogImage = Astro.props?.image || defaultImage;
@@ -162,29 +164,31 @@ const orgSchema = {
 
         <!-- page content -->
         <main>
-            <div class="page-container">
-                <aside class="sidebar-ads left-sidebar-ad">
-                  <!-- side raily ad slot -->
-                  <!-- /23335597477/SideySideRails -->
-                  <div id='div-gpt-ad-1770493604749-0' style='min-width: 120px; min-height: 600px;'>
-                    <script is:inline>
-                      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-0'); });
-                    </script>
-                  </div>
-                </aside>
-              <div class="main-content">
-                <slot />
-              </div>
-                <aside class="sidebar-ads right-sidebar-ad">
-                  <!-- side raily ad slot -->
-                  <!-- /23335597477/SideySideRails -->
-                  <div id='div-gpt-ad-1770493604749-1' style='min-width: 120px; min-height: 600px;'>
-                    <script is:inline>
-                      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-1'); });
-                    </script>
-                  </div>
-                </aside>
+          <div class="page-container">
+            {showSideAds && (
+              <aside class="sidebar-ads left-sidebar-ad">
+                <div id="div-gpt-ad-1770493604749-0" style="min-width: 120px; min-height: 600px;">
+                  <script is:inline>
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-0'); });
+                  </script>
+                </div>
+              </aside>
+            )}
+
+            <div class="main-content">
+              <slot />
             </div>
+          
+            {showSideAds && (
+              <aside class="sidebar-ads right-sidebar-ad">
+                <div id="div-gpt-ad-1770493604749-1" style="min-width: 120px; min-height: 600px;">
+                  <script is:inline>
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1770493604749-1'); });
+                  </script>
+                </div>
+              </aside>
+            )}
+          </div>
         </main>
 
         <!-- footer -->
