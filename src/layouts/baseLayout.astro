@@ -1,8 +1,8 @@
 ---
 import '../assets/global.css';
 import JsonLd from './JsonLd.astro';
-import TopNav from '../componets/topNav.vue';
-import SiteFooter from '../componets/footer.vue';
+import TopNav from '../components/topNav.vue';
+import SiteFooter from '../components/footer.vue';
 
 export interface Props {
   title?: string;
@@ -103,8 +103,8 @@ const orgSchema = {
     <script is:inline>
       window.googletag = window.googletag || {cmd: []};
       googletag.cmd.push(function() {
-        googletag.defineSlot('/23335597477/SideySideRails', [[300, 600], [160, 600],  [120, 600]], 'div-gpt-ad-1770493604749-0').addService(googletag.pubads());
-        googletag.defineSlot('/23335597477/SideySideRails', [[300, 600], [160, 600],  [120, 600]], 'div-gpt-ad-1770493604749-1').addService(googletag.pubads());
+        googletag.defineSlot('/23335597477/SideySideRails', [[300, 600],  [160, 600],  [120, 600]], 'div-gpt-ad-1770493604749-0').addService(googletag.pubads());
+        googletag.defineSlot('/23335597477/SideySideRails', [[300, 600],  [160, 600],  [120, 600]], 'div-gpt-ad-1770493604749-1').addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
