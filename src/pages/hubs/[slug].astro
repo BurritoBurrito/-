@@ -12,6 +12,8 @@ import {
 
 type HubEntry = CollectionEntry<'hubs'>;
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const hubs = await getCollection('hubs');
 

@@ -4,6 +4,12 @@ import JsonLd from '../../layouts/JsonLd.astro';
 import data from '../../../public/top500games.json';
 import GameGrid from '../../components/GameGrid.vue';
 import '../../assets/global.css';
+export function getStaticPaths() {
+  return data.games.map((g) => ({
+    params: { id: String(g.gameId) },
+  }));
+}
+export const prerender = true;
 
 const { id } = Astro.params;
 const game = data.games.find((g) => String(g.gameId) === String(id));
