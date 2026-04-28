@@ -204,8 +204,10 @@ const orgSchema = {
           gtag('config', 'G-TW1C8W4K8F');
         </script>
 
-        <!-- Google Ad Tags -->
-        <script is:inline defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324" crossorigin="anonymous"></script>
+        {showSideAds && (
+          // Google Ad Tags
+          <script is:inline defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1658760822270324" crossorigin="anonymous"></script>
+        )}
     </div>
   </body>
 </html>
